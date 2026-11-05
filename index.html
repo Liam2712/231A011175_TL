@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website hỗ trợ Dạy học Môn Lập trình Java</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">☕ Java</div>
+
+    <nav class="nav" id="nav">
+        <button class="active" data-page="home">Trang chủ</button>
+        <button data-page="theory">Lý thuyết</button>
+        <button data-page="exercises">Bài tập</button>
+        <button data-page="practice">Kiểm tra / Thi</button>
+        <button data-page="teacher">Giáo viên</button>
+        <button data-page="login">Đăng nhập</button>
+    </nav>
+</header>
+
+<main class="container">
+
+    <!-- TRANG CHỦ -->
+    <section id="home" class="page">
+        <div class="hero">
+            <div>
+                <span class="pill">NỀN TẢNG HỌC TẬP TRỰC TUYẾN</span>
+
+                <h1>Học lập trình Java<br>dễ dàng hơn mỗi ngày</h1>
+
+                <p>
+                    Học lý thuyết, thực hành bài tập và kiểm tra kiến thức Java
+                    trong một giao diện thân thiện. Học từ cơ bản đến nâng cao.
+                </p>
+
+                <div class="row">
+                    <button class="primary" onclick="showPage('theory')">
+                        Bắt đầu học →
+                    </button>
+
+                    <button class="secondary" onclick="showPage('exercises')">
+                        Xem bài tập
+                    </button>
+                </div>
+            </div>
+
+<div class="hero-visual student-profile">
+    <img id="heroAvatar"
+         src="img/avatar.jpg"
+         alt="Ảnh đại diện sinh viên"
+         class="student-avatar">
+
+<h2 id="heroName">Trần Chấn Lâm</h2>
+
+<p>
+    Mã số sinh viên:
+    <strong id="heroStudentId">231A011175</strong>
+</p>
+
+<span class="student-label">Người tạo Website</span>
+
+</div>
+
+        </div>
+
+        <div class="section-title">
+            <h2>📚 Các chương học</h2>
+            <span class="small">8 chương cơ bản</span>
+        </div>
+
+        <div class="grid" id="chapterCards"></div>
+
+  
+
+   
+    </section>
+
+    <!-- LÝ THUYẾT -->
+    <section id="theory" class="page hidden">
+        <div class="layout">
+            <aside class="sidebar">
+                <h3>Chương học</h3>
+                <div id="chapterMenu"></div>
+            </aside>
+
+            <div class="content card">
+                <span class="pill">BÀI GIẢNG JAVA</span>
+                <h2 id="lessonTitle"></h2>
+                <div id="lessonBody" class="lesson"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÀI TẬP -->
+    <section id="exercises" class="page hidden">
+        <div class="section-title">
+            <h2>🧩 Bài tập thực hành</h2>
+            <span class="small">Chọn bài để luyện tập</span>
+        </div>
+
+        <div class="tabs" id="levelTabs">
+            <button class="active" data-level="Tất cả">Tất cả</button>
+            <button data-level="Dễ">Dễ</button>
+            <button data-level="Trung bình">Trung bình</button>
+            <button data-level="Khó">Khó</button>
+        </div>
+
+        <div class="list" id="exerciseList"></div>
+    </section>
+
+    <!-- KIỂM TRA VÀ THI -->
+    <section id="practice" class="page hidden">
+        <div class="layout">
+            <aside class="sidebar">
+                <h3>Khu vực sinh viên</h3>
+
+                <button onclick="setPracticeMode('Kiểm tra')">
+                    📝 Kiểm tra
+                </button>
+
+                <button onclick="setPracticeMode('Thi')">
+                    🎓 Thi
+                </button>
+
+                <button onclick="showPage('results')">
+                    🏆 Lịch sử làm bài
+                </button>
+            </aside>
+
+            <div class="content card">
+                <h2 id="practiceTitle">Kiểm tra bài tập</h2>
+
+                <div class="notice">
+                    Nhập thông tin sinh viên, chọn hình thức và làm bài.
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Họ tên sinh viên</label>
+                        <input id="studentName"
+                               placeholder="Ví dụ: Nguyễn Văn A">
+                    </div>
+
+                    <div class="field">
+                        <label>Mã số sinh viên</label>
+                        <input id="studentId"
+                               placeholder="Ví dụ: 20201234">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Hình thức</label>
+
+                    <select id="practiceMode"
+                            onchange="updatePracticeMode()">
+                        <option>Kiểm tra</option>
+                        <option>Thi</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>
+                        Chọn bài tập
+                        <span id="selectionHint">(chọn 1 bài)</span>
+                    </label>
+
+                    <div id="practiceChoices" class="list"></div>
+                </div>
+
+                <div id="codingArea" class="hidden">
+                    <hr>
+
+                    <h3 id="currentExerciseTitle"></h3>
+                    <p id="currentExerciseDesc"></p>
+
+                    <label for="answerCode">
+                        <b>Lời giải của bạn</b>
+                    </label>
+
+                    <textarea id="answerCode"
+                              placeholder="Viết lời giải Java tại đây..."></textarea>
+
+                    <p class="small">
+                        Đây là chức năng chấm điểm minh họa.
+                    </p>
+
+                    <button class="primary" onclick="submitAnswer()">
+                        Nộp bài và chấm điểm
+                    </button>
+
+                    <button class="secondary"
+                            onclick="document.getElementById('answerCode').value=''">
+                        Làm lại
+                    </button>
+
+                    <div id="gradeResult"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ĐĂNG NHẬP -->
+    <section id="login" class="page hidden">
+        <div class="card login-card">
+            <h2>🔐 Đăng nhập hệ thống</h2>
+
+
+
+            <div class="field">
+                <label>Vai trò</label>
+
+                <select id="loginRole">
+                    <option value="Sinh viên">Sinh viên</option>
+                    <option value="Giáo viên">Giáo viên</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Họ tên / Tài khoản</label>
+                <input id="loginName"
+                       placeholder="Nhập họ tên hoặc tài khoản">
+            </div>
+
+            <div class="field">
+                <label>Mã sinh viên / Mật khẩu</label>
+                <input id="loginPass"
+                       placeholder="Nhập mã sinh viên hoặc mật khẩu">
+            </div>
+
+            <button class="primary" onclick="login()">
+                Đăng nhập
+            </button>
+
+            <span id="loginMessage" class="small"></span>
+        </div>
+    </section>
+
+    <!-- KHU VỰC GIÁO VIÊN -->
+    <section id="teacher" class="page hidden">
+        <div class="section-title">
+            <h2>🧑‍🏫 Khu vực giáo viên</h2>
+            <span class="pill">Quản lý nội dung</span>
+        </div>
+
+
+        <div class="grid teacher-grid">
+            <div class="card">
+                <h3>➕ Tạo bài tập mới</h3>
+
+                <div class="field">
+                    <label>Tên bài tập</label>
+                    <input id="newTitle"
+                           placeholder="Ví dụ: Tính tổng hai số">
+                </div>
+
+                <div class="field">
+                    <label>Mức độ</label>
+
+                    <select id="newLevel">
+                        <option>Dễ</option>
+                        <option>Trung bình</option>
+                        <option>Khó</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Đề bài</label>
+                    <textarea id="newDesc"
+                              placeholder="Mô tả yêu cầu bài tập"></textarea>
+                </div>
+
+                <div class="field">
+                    <label>Đáp án mẫu</label>
+                    <input id="newExpected"
+                           placeholder="Ví dụ: 5">
+                </div>
+
+                <button class="primary" onclick="addExercise()">
+                    Lưu bài tập
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>🧪 Chỉnh sửa 5 bộ test</h3>
+                <p class="small">Mỗi test gồm đầu vào và đầu ra mong đợi. Nhập JSON hợp lệ.</p>
+                <div class="field">
+                    <label>Chọn bài tập</label>
+                    <select id="testExerciseSelect" onchange="loadTestJson()"></select>
+                </div>
+                <div class="field">
+                    <label>5 bộ test (JSON)</label>
+                    <textarea id="testJson" rows="12" spellcheck="false"></textarea>
+                </div>
+                <button class="primary" onclick="saveTestsForExercise()">Lưu 5 bộ test</button>
+            </div>
+
+            <div class="card">
+                <h3>📝 Tạo đề thi</h3>
+                <div class="field">
+                    <label>Tên đề thi</label>
+                    <input id="examTitle" placeholder="Ví dụ: Đề kiểm tra Java số 1">
+                </div>
+                <label>Chọn bài tập trong đề</label>
+                <div id="examExerciseChoices"></div>
+                <button class="primary" onclick="createExam()">Lưu đề thi</button>
+            </div>
+
+            <div class="card">
+                <h3>📋 Đề thi đã tạo</h3>
+                <div id="examList"></div>
+            </div>
+
+            <div class="card">
+                <h3>🧪 Bộ test mẫu</h3>
+
+                <p>
+                    Mỗi bài tập được minh họa với 5 bộ test,
+                    mỗi test đúng tương ứng 2 điểm.
+                </p>
+
+                <div id="teacherTestPreview"></div>
+
+
+                <button class="secondary" onclick="renderTeacherTests()">
+                    Làm mới danh sách
+                </button>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <h2>Danh sách bài tập hiện có</h2>
+        </div>
+
+        <div class="list" id="teacherExerciseList"></div>
+    </section>
+
+    <!-- 🏆 Lịch sử làm bài -->
+    <section id="results" class="page hidden">
+        <div class="section-title">
+            <h2>🏆 Lịch sử làm bài</h2>
+
+            <button class="secondary" onclick="showPage('practice')">
+                Làm bài mới
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Mã sinh viên</th>
+                            <th>Bài tập</th>
+                            <th>Hình thức</th>
+                            <th>Điểm</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resultRows"></tbody>
+                </table>
+            </div>
+
+            <p id="emptyResults" class="small">
+                Chưa có kết quả nào.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    © 2026 · Website hỗ trợ dạy học môn lập trình Java
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
